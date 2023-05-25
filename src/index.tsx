@@ -1,18 +1,56 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import { Provider } from 'react-redux';
-import { store } from './app/store';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import './index.css';
+import React from "react";
+import { store } from "./app/store";
+import { Paths } from "./paths";
+import { Provider } from "react-redux";
+import { ConfigProvider, theme } from "antd";
+import { createRoot } from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import reportWebVitals from "./reportWebVitals";
+import "./index.css";
 
-const container = document.getElementById('root')!;
+import { BitAdd } from "./pages/bit-add";
+import { AuctionLot } from "./pages/auction-lot";
+import { AuctionLotList } from "./pages/auction-lot-list";
+
+const container = document.getElementById("root")!;
 const root = createRoot(container);
+const router = createBrowserRouter([
+  {
+    path: Paths.home,
+    element: <AuctionLotList />,
+  },
+  {
+    path: Paths.auctionLots,
+    element: <AuctionLotList />,
+  },
+  {
+    path: Paths.auctionLotToday,
+    element: <AuctionLotList />,
+  },
+  {
+    path: Paths.auctionLotEnded,
+    element: <AuctionLotList />,
+  },
+  {
+    path: `${Paths.auctionLot}/:id`,
+    element: <AuctionLot />,
+  },
+  {
+    path: Paths.bitAdd,
+    element: <BitAdd />,
+  },
+]);
 
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <ConfigProvider
+        theme={{
+          algorithm: theme.defaultAlgorithm,
+        }}
+      >
+        <RouterProvider router={router} />
+      </ConfigProvider>
     </Provider>
   </React.StrictMode>
 );

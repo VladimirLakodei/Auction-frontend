@@ -1,10 +1,14 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import { api } from "./services/api";
+import auction from "../features/auction/auctionSlice";
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    [api.reducerPath]: api.reducer,
+    auction,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(api.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;
