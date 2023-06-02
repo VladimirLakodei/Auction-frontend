@@ -1,5 +1,5 @@
 import { Table, Button } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Paths } from "../../paths";
 import { Layout } from "../../components/layout";
 import type { ColumnsType } from "antd/es/table";
@@ -8,9 +8,9 @@ import { useGetAllAuctionLotsQuery } from "../../app/services/auction";
 
 export const AuctionLotList = () => {
   const navigate = useNavigate();
-  const { data, isLoading } = useGetAllAuctionLotsQuery();
-
-  const goToAddBid = () => navigate(Paths.bitAdd);
+  const params = useParams<{ filter: string }>();
+  const { data, isLoading } = useGetAllAuctionLotsQuery(params);
+  const goToAddLot = () => navigate(Paths.auctionLotAdd);
 
   const columns: ColumnsType<Lot> = [
     {
@@ -32,8 +32,8 @@ export const AuctionLotList = () => {
 
   return (
     <Layout>
-      <Button type="primary" style={{ margin: "16px 0" }} onClick={goToAddBid}>
-        Add Bid
+      <Button type="primary" style={{ margin: "16px 0" }} onClick={goToAddLot}>
+        Add Lot
       </Button>
 
       <Table

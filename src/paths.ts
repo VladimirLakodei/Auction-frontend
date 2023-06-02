@@ -4,5 +4,6 @@ export const Paths = {
   auctionLots: "/auction/lots",
   auctionLotToday: "/auction/lots/today",
   auctionLotEnded: "/auction/lots/ended",
-  bitAdd: "/auction/lots/bit/add",
+  auctionLotAdd: "/auction/lots/bit/add",
+  bitAdd: "/auction/lots/:id/bit/add",
 } as const;

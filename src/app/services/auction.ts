@@ -3,18 +3,26 @@ import { Lot, Bid } from "../../types";
 
 export const auctionApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getAllAuctionLots: builder.query<Lot[], void>({
-      query: () => ({
+    getAllAuctionLots: builder.query<Lot[], object>({
+      query: (params) => ({
         url: "/auction/lots",
+        params,
         method: "GET",
       }),
     }),
-    // getAuctionLot: builder.query<Lot, string>({
-    //   query: (id) => ({
-    //     url: `/auction/lots/${id}`,
-    //     method: "GET",
-    //   }),
-    // }),
+    getAuctionLot: builder.query<Lot, string>({
+      query: (id) => ({
+        url: `/auction/lots/${id}`,
+        method: "GET",
+      }),
+    }),
+    addLot: builder.mutation<Lot, Lot>({
+      query: (lot) => ({
+        url: "/auction/lots",
+        method: "POST",
+        body: lot,
+      }),
+    }),
     addBid: builder.mutation<Bid, Bid>({
       query: (bid) => ({
         url: `/auction/lots/${bid.lotId}/bids`,
@@ -25,8 +33,13 @@ export const auctionApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetAllAuctionLotsQuery, useAddBidMutation } = auctionApi;
+export const {
+  useGetAuctionLotQuery,
+  useGetAllAuctionLotsQuery,
+  useAddLotMutation,
+  useAddBidMutation,
+} = auctionApi;
 
 export const {
-  endpoints: { getAllAuctionLots, addBid },
+  endpoints: { getAllAuctionLots, getAuctionLot, addLot, addBid },
 } = auctionApi;

@@ -15,7 +15,7 @@ export type Lot = {
   startDate: String | null;
   endDate: String | null;
   bids: Bid[];
-  highestBid: Bid;
+  highestBid: Bid | null;
 };
 
 export type ErrorWithMessage = {

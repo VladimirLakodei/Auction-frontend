@@ -1,25 +1,22 @@
 import { Row } from "antd";
 import { useState } from "react";
-import { Bid } from "../../types";
-import { BitForm } from "../../components/bid-form";
-import { useParams, useNavigate } from "react-router-dom";
+import { Lot } from "../../types";
+import { LotForm } from "../../components/lot-form";
+import { useNavigate } from "react-router-dom";
 import { Layout } from "../../components/layout";
-import { useAddBidMutation } from "../../app/services/auction";
+import { useAddLotMutation } from "../../app/services/auction";
 import { isErrorWithMessage } from "../../utils/is-error-with-message";
 import { Paths } from "../../paths";
 
-export const BitAdd = () => {
+export const LotAdd = () => {
   const navigate = useNavigate();
-  const params = useParams<{ id: string }>();
   const [error, setError] = useState("");
-  const [addBid] = useAddBidMutation();
+  const [addLot] = useAddLotMutation();
 
-  const handleAddBid = async (data: Bid) => {
+  const handleAddLot = async (data: Lot) => {
     try {
-      data.lotId = Number(params.id);
-      await addBid(data).unwrap();
-
-      navigate(`${Paths.auctionLot}/${data.id}`);
+      const newLot = await addLot(data).unwrap();
+      navigate(`${Paths.auctionLot}/${newLot.id}`);
     } catch (err) {
       const maybeError = isErrorWithMessage(err);
 
@@ -34,9 +31,9 @@ export const BitAdd = () => {
   return (
     <Layout>
       <Row align="middle" justify="center">
-        <BitForm
-          onFinish={handleAddBid}
-          title="Add Bid"
+        <LotForm
+          onFinish={handleAddLot}
+          title="Add Lot"
           btnText="Add"
           error={error}
         />

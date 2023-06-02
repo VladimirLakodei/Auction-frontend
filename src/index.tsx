@@ -9,6 +9,7 @@ import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 
 import { BitAdd } from "./pages/bit-add";
+import { LotAdd } from "./pages/lot-add";
 import { AuctionLot } from "./pages/auction-lot";
 import { AuctionLotList } from "./pages/auction-lot-list";
 
@@ -24,16 +25,16 @@ const router = createBrowserRouter([
     element: <AuctionLotList />,
   },
   {
-    path: Paths.auctionLotToday,
-    element: <AuctionLotList />,
-  },
-  {
-    path: Paths.auctionLotEnded,
+    path: `${Paths.auctionLots}/:filter`,
     element: <AuctionLotList />,
   },
   {
     path: `${Paths.auctionLot}/:id`,
     element: <AuctionLot />,
+  },
+  {
+    path: Paths.auctionLotAdd,
+    element: <LotAdd />,
   },
   {
     path: Paths.bitAdd,
